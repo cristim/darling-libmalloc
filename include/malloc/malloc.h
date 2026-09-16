@@ -309,6 +309,12 @@ extern void malloc_zone_enumerate_discharged_pointers(malloc_zone_t *zone, void 
 extern void malloc_zone_enumerate_discharged_pointers(malloc_zone_t *zone, void *) __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 #endif /* __BLOCKS__ */
 
+/* Compatibility entry points for callers with opaque allocation type hints. */
+typedef unsigned long long malloc_type_id_t;
+extern void *malloc_type_malloc(size_t size, malloc_type_id_t type_id);
+extern void *malloc_type_calloc(size_t count, size_t size, malloc_type_id_t type_id);
+extern void *malloc_type_realloc(void *ptr, size_t size, malloc_type_id_t type_id);
+
 __END_DECLS
 
 #endif /* _MALLOC_MALLOC_H_ */

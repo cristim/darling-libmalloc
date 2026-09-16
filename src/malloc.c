@@ -2990,3 +2990,28 @@ __mach_stack_logging_set_file_path(task_t task, char* file_path)
 int stack_logging_enable_logging = 0;
 
 /* vim: set noet:ts=4:sw=4:cindent: */
+
+/* Modern callers pass an opaque allocation type hint.  Darling's allocator
+ * does not segregate allocations by type; retain the ordinary allocation
+ * semantics, including overflow checks, errno and realloc failure ownership.
+ */
+void *
+malloc_type_malloc(size_t size, malloc_type_id_t type_id)
+{
+	(void)type_id;
+	return malloc(size);
+}
+
+void *
+malloc_type_calloc(size_t count, size_t size, malloc_type_id_t type_id)
+{
+	(void)type_id;
+	return calloc(count, size);
+}
+
+void *
+malloc_type_realloc(void *ptr, size_t size, malloc_type_id_t type_id)
+{
+	(void)type_id;
+	return realloc(ptr, size);
+}
